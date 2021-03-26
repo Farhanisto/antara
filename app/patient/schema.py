@@ -38,7 +38,33 @@ class CreatePatient(graphene.Mutation):
         return CreatePatient(patient=patient)
 
 
+class UpdatePatient(graphene.Mutation):
+    patient = graphene.Field(PatientType)
+
+    class Arguments:
+        id = graphene.Int(required=True)
+        name = graphene.String()
+        age = graphene.Int()
+        avatat = graphene.String()
+        contact = graphene.String()
+
+    def mutate(self, info, id, name, age, avatat, contact):
+        user = info.context.user
+        patient = Patient.objects.get(id=id)
+        if not patient:
+            raise Exception('no such patient')
+
+        if patient.posted_by != user:
+            raise Exception('login first')
+        patient.name = name
+        patient.age = age
+        patient.avatat = avatat
+        patient.save
+
+        return UpdatePatient(patient=patient)
+
+
 class Mutation(graphene.ObjectType):
     create_Patient = CreatePatient.Field()
-    # update_Patient = UpdatePatient.Field()
+    update_Patient = UpdatePatient.Field()
     # delete_Patient = DeletePatient.Field()
