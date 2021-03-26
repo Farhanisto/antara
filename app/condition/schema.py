@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from .models import Condition
-# from .patient.models import Patient
+from patient.models import Patient
 
 
 class ConditionType(DjangoObjectType):
@@ -25,10 +25,11 @@ class CreateCondition(graphene.Mutation):
         name = graphene.String()
         severity = graphene.Int()
         end_date = graphene.Date()
+        patient = graphene.Int()
 
     def mutate(self, info, name, severity, end_date, patient):
         user = info.context.user
-        # patient = Patient.objects.filter(patient__id=patient)
+        patient = Patient.objects.filter(id=patient)
         if not patient:
             raise Exception('Create patient first')
         if (user.is_anonymous):

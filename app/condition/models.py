@@ -3,7 +3,7 @@
 from django.utils.translation import gettext as _
 from model_utils import Choices
 from django.db import models
-# from patient.models import Patient
+from patient.models import Patient
 # Create your models here.
 
 
@@ -19,5 +19,5 @@ class Condition(models.Model):
         choices=SEVERITY, default=SEVERITY.LOW)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
-    # patient = models.ForeignKey(
-    #     Patient, null=True, on_delete=models.CASCADE)
+    patient = models.ForeignKey(
+        Patient, null=True, on_delete=models.CASCADE)
