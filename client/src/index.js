@@ -1,22 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
 
 import App from './App';
-import {ApolloProvider} from 'react-apollo'
-import ApolloClient from 'apollo-boost'
-import Auth from './components/Auth'
+import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:8000/graphql/ '
-})
-
-ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client = {client}>
-       <App/>
-       <Auth />
+  uri: 'http://localhost:8000/graphql/ ',
+  cache: new InMemoryCache()
+});
+const Index = () => (
+  <ApolloProvider client = {client}>
+       <App/> 
+       
     </ApolloProvider>
-  </React.StrictMode>,
+)
+render(<Index/>,
   document.getElementById('root')
 );
 

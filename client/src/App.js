@@ -1,31 +1,24 @@
-import React from "react"
-import { Query } from "react-apollo"
-import { gql } from "apollo-boost"
+
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import Layout from './components/hocs/Layout';
+import Home from './components/Home';
+
+import { useQuery, gql } from '@apollo/client';
 
 
-const Root = () => (
-  <Query query = {GET_PATIENT_QUERY}>
-    {({data, loading , error}) =>{
+const App = () => (
+    <Router>
+        <Layout>
+            <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/register' component={Register}/>
+            </Switch>
+        </Layout>
+    </Router>
+);
 
-      if(loading) return <div>loading</div>
-      if(error) return <div> Error </div>
-      return <div>{JSON.stringify(data)}</div>
-    }}
-  </Query>
-
-)
-
-const GET_PATIENT_QUERY = gql`
-  {
-  patient{
-    id
-    age
-    name
-    docter{
-      id
-    }
-  }
-}
-`
-
-export default Root
+export default App;
