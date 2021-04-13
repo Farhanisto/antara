@@ -1,6 +1,11 @@
-import React from "react";
-
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 const Signout = () => {
-  return <div>Signout</div>;
-};
-export default Signout;
+  return (
+    <>
+      {localStorage.removeItem('token')}
+      <Redirect to="/" />
+    </>
+  )
+}
+export default Signout
