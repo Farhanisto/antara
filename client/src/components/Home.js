@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Patients from './patients/Patients'
 
 const Home = () => {
   const token = localStorage.getItem('token')
@@ -11,7 +12,7 @@ const Home = () => {
         <hr className="my-4" />
         <p>Records.</p>
         {token ? (
-          <div>welcome back.... Loading patients and conditions</div>
+          <Patients />
         ) : (
           <Link className="btn btn-primary btn-lg" to="/login" role="button">
             login to continue
